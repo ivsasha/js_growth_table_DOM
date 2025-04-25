@@ -18,9 +18,9 @@ const addRow = () => {
       row.appendChild(cell);
     });
     table.appendChild(row);
-  } else {
-    appendRow.setAttribute('disabled', '');
   }
+
+  disableButtons();
 };
 
 const addColumn = () => {
@@ -32,9 +32,9 @@ const addColumn = () => {
 
       row.appendChild(cell);
     });
-  } else {
-    appendColumn.setAttribute('disabled', '');
   }
+
+  disableButtons();
 };
 
 const removeRows = () => {
@@ -42,9 +42,9 @@ const removeRows = () => {
 
   if (rows.length > 2) {
     rows[rows.length - 1].remove();
-  } else {
-    removeRow.setAttribute('disabled', '');
   }
+
+  disableButtons();
 };
 
 const removeColumns = () => {
@@ -54,8 +54,34 @@ const removeColumns = () => {
     rows.forEach((row) => {
       row.lastElementChild.remove();
     });
+  }
+
+  disableButtons();
+};
+
+const disableButtons = () => {
+  if (table.querySelectorAll('tr').length >= 10) {
+    appendRow.setAttribute('disabled', '');
   } else {
+    appendRow.removeAttribute('disabled');
+  }
+
+  if (table.querySelectorAll('tr:first-child td').length >= 10) {
+    appendColumn.setAttribute('disabled', '');
+  } else {
+    appendColumn.removeAttribute('disabled');
+  }
+
+  if (table.querySelectorAll('tr').length <= 2) {
+    removeRow.setAttribute('disabled', '');
+  } else {
+    removeRow.removeAttribute('disabled');
+  }
+
+  if (table.querySelectorAll('tr:first-child td').length <= 2) {
     removeColumn.setAttribute('disabled', '');
+  } else {
+    removeColumn.removeAttribute('disabled');
   }
 };
 
